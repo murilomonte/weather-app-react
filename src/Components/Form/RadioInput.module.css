@@ -1,0 +1,32 @@
+.radioLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px;
+  margin: 2px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: .9rem;
+  color: var(--neutral-200)
+}
+
+.radioLabel:hover, .radioLabel:has(input[type="radio"]:checked) {
+  background-color: var(--neutral-700);
+}
+
+.radioLabel > input[type='radio'] {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.radioLabel:has(input[type="radio"]:checked)::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+
+  background-image: url("../../assets/images/icon-checkmark.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}

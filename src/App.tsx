@@ -1,9 +1,13 @@
 import React from 'react';
+import Home from './Pages/Home';
+import Header from './Components/_partials/Header';
 
 const App = () => {
-  const oi = 'o';
   return (
-    <div>App</div>
+    <div className='container'>
+      <Header/>
+      <Home/>
+    </div>
   )
 }
 

@@ -1,0 +1,66 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.unitsButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 15px;
+
+  cursor: pointer;
+
+  background-color: var(--neutral-700);
+  border: none;
+  border-radius: 5px;
+  color: var(--neutral-200);
+}
+
+.unitsButton > svg > path {
+  color: var(--neutral-200);
+}
+
+.unitsMenu {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+
+  color: white;
+  background-color: var(--neutral-800);
+  display: inline-block;
+  padding: 5px;
+  border-radius: 10px;
+  width: 200px;
+  border: 1px solid var(--neutral-600);
+  margin: 10px 0;
+}
+
+.active {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+.switchButton {
+  font-size: .9rem;
+  font-weight: 500;
+  display: flex;
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  border-radius: 5px;
+  color: var(--neutral-200);
+  border: none;
+  cursor: pointer;
+}
+
+.switchButton:hover {
+  background-color: var(--neutral-700);
+}

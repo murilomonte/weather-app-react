@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+  /* Neutral */
+  --neutral-900: hsl(243, 96%, 9%);
+  --neutral-800: hsl(243, 27%, 20%);
+  --neutral-700: hsl(243, 23%, 24%);
+  --neutral-600: hsl(243, 23%, 30%);
+  --neutral-300: hsl(240, 6%, 70%);
+  --neutral-200: hsl(250, 6%, 84%);
+  --neutral-0: hsl(0, 0%, 100%);
+
+  /* Orange */
+  --orange-500: hsl(28, 100%, 52%);
+
+  /* Blue */
+  --blue-500: hsl(233, 67%, 56%);
+  --blue-700: hsl(248, 70%, 36%);
+
+  /* Semantic tokens (based on the UI) */
+  --bg-page: var(--neutral-900);
+  --bg-surface: var(--neutral-800);
+  --bg-card: var(--neutral-700);
+  --bg-card-muted: var(--neutral-600);
+
+  --text-primary: var(--neutral-0);
+  --text-secondary: var(--neutral-200);
+  --text-muted: var(--neutral-300);
+
+  --accent-primary: var(--blue-500);
+  --accent-secondary: var(--blue-700);
+  --accent-warning: var(--orange-500);
+
+  --icon-sun: var(--orange-500);
+  --icon-cloud: var(--neutral-200);
+
+  /* Font family */
+  --typography-1: "DM Sans", sans-serif;;
+  --typography-2: "Bricolage Grotesque", sans-serif;;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-page);
+  font-family: var(--typography-1);
+}
+
+button {
+  display: block;
+  padding: 10px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
