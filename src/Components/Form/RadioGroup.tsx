@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from "react";
 import RadioInput from "./RadioInput";
-import style from './RadioGroupt.module.css';
+import style from './RadioGroup.module.css';
 
 export type RadioGroupOptions = { id: string; name: string }[];
 
