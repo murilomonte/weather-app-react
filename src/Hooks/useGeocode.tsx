@@ -63,6 +63,7 @@ const useGeocode = () => {
   return {
     request,
     data,
+    setData,
     loading,
     error,
   };

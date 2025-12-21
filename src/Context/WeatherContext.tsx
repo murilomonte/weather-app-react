@@ -4,20 +4,18 @@ import type { WeatherResponse } from "./WeatherInterfaces";
 
 const API_URL =
   "https://api.open-meteo.com/v1/forecast?daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&timezone=auto";
-  
+
 type IWeatherContext = {
   data: WeatherResponse | null;
   loading: boolean;
   error: string | null;
-  weatherOptions: WeatherOptions | null;
-  setWeatherOptions: React.Dispatch<
-    React.SetStateAction<WeatherOptions | null>
-  >;
+  weatherOptions: WeatherOptions;
+  setWeatherOptions: React.Dispatch<React.SetStateAction<WeatherOptions>>;
 };
 
 type WeatherOptions = {
-  latitude: number;
-  longitude: number;
+  latitude: string;
+  longitude: string;
   wind_speed_unit: "mph" | "kmh";
   temperature_unit: "fahrenheit" | "celsius";
   precipitation_unit: "inch" | "mm";
@@ -33,19 +31,18 @@ export const useWeather = () => {
   return context;
 };
 
-
 export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
   const defaultOptions: WeatherOptions = {
-    latitude: -4.585808883688986, // TODO: pegar do user
-    longitude: -42.85883983395454,
+    latitude: "-4.585808883688986", // TODO: pegar do user
+    longitude: "-42.85883983395454",
     wind_speed_unit: "kmh",
-    temperature_unit: "fahrenheit",
+    temperature_unit: "celsius",
     precipitation_unit: "mm",
     forecast_days: 7,
   };
 
   const [weatherOptions, setWeatherOptions] =
-    React.useState<WeatherOptions | null>(null);
+    React.useState<WeatherOptions>(defaultOptions);
 
   let url: string;
 
@@ -68,7 +65,7 @@ export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
   }
 
   const { data, loading, error } = useFetch<WeatherResponse>(url);
-  
+  console.log(data)
   return (
     <WeatherContext.Provider
       value={{ data, loading, error, weatherOptions, setWeatherOptions }}
