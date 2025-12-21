@@ -35,22 +35,22 @@
   --icon-cloud: var(--neutral-200);
 
   /* Font family */
-  --typography-1: "DM Sans", sans-serif;;
-  --typography-2: "Bricolage Grotesque", sans-serif;;
-
+  --typography-2: "DM Sans", sans-serif;
+  --typography-1: "Bricolage Grotesque", sans-serif;
 }
 
+
+
+body, html {
+  background-color: var(--bg-page);
+  font-family: var(--typography-1);
+}
 * {
+  font-family: inherit;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
-body {
-  background-color: var(--bg-page);
-  font-family: var(--typography-1);
-}
-
 button {
   display: block;
   padding: 10px 20px;
