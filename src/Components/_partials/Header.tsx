@@ -1,44 +1,87 @@
 import React from "react";
 import LogoSVG from "../../assets/images/logo.svg?react";
-import RadioInput from "../Form/RadioInput";
 import styles from "./Header.module.css";
-import RadioGroup, { type RadioGroupOptions } from "../Form/RadioGroup";
-import SettingsSVG from '../../assets/images/icon-units.svg?react';
-import DownArrowSVG from '../../assets/images/icon-dropdown.svg?react';
+import SettingsSVG from "../../assets/images/icon-units.svg?react";
+import DownArrowSVG from "../../assets/images/icon-dropdown.svg?react";
+import { useWeather } from "../../Context/WeatherContext";
+import UnitsGroup from "./UnitsGroup";
 
-const temperatureOpt: RadioGroupOptions = [
-  { id: "c", name: "Celcius (°C)" },
-  { id: "f", name: "Fahrenheit (°F)" },
-];
+interface UnitOptions<T> {
+  state: T;
+  setState: React.Dispatch<React.SetStateAction<T>>;
+  title: string;
+  name: string;
+  options: { id: T; title: string }[];
+}
 
-const windOpt: RadioGroupOptions = [
-  { id: "kmh", name: "km/h" },
-  { id: "mph", name: "mph" },
-];
+type Units = "imperial" | "metric";
+type TempUnits = "celsius" | "fahrenheit";
+type WindUnits = "kmh" | "mph";
+type PreciptUnits = "mm" | "inch";
 
-const preciptationOpt: RadioGroupOptions = [
-  { id: "mm", name: "Milimiters (mm)" },
-  { id: "in", name: "Inches (in)" },
-];
 const Header = () => {
+  const [temperature, setTemperature] = React.useState<TempUnits>("celsius");
+  const [wind, setWind] = React.useState<WindUnits>("mph");
+  const [preciptation, setPreciptation] = React.useState<PreciptUnits>("mm");
+
+  const tempOpt: UnitOptions<TempUnits> = {
+    state: temperature,
+    setState: setTemperature,
+    title: "Temperature",
+    name: "temperature",
+    options: [
+      { id: "celsius", title: "Celcius (°C)" },
+      { id: "fahrenheit", title: "Fahrenheit (°F)" },
+    ],
+  };
+
+  const windOpt: UnitOptions<WindUnits> = {
+    state: wind,
+    setState: setWind,
+    title: "Wind Speed",
+    name: "wind_speed",
+    options: [
+      { id: "kmh", title: "km/h" },
+      { id: "mph", title: "mph" },
+    ],
+  };
+
+  const preciptOpt: UnitOptions<PreciptUnits> = {
+    state: preciptation,
+    setState: setPreciptation,
+    title: "Preciptation",
+    name: "preciptation",
+    options: [
+      { id: "mm", title: "Milimiters (mm)" },
+      { id: "inch", title: "Inches (in)" },
+    ],
+  };
+
   const [dropdown, setDropdown] = React.useState(false);
-  const [mode, setMode] = React.useState<"imperial" | "metric">("imperial");
+  const [mode, setMode] = React.useState<Units>("imperial");
+
+  const { data, weatherOptions, setWeatherOptions } = useWeather();
 
   React.useEffect(() => {
     if (mode == "imperial") {
-      setTemperature(temperatureOpt[1].id);
-      setWind(windOpt[1].id);
-      setPreciptation(preciptationOpt[1].id);
+      setTemperature("fahrenheit");
+      setWind("mph");
+      setPreciptation("inch");
     } else if (mode === "metric") {
-      setTemperature(temperatureOpt[0].id);
-      setWind(windOpt[0].id);
-      setPreciptation(preciptationOpt[0].id);
+      setTemperature("celsius");
+      setWind("kmh");
+      setPreciptation("mm");
     }
   }, [mode]);
 
-  const [temperature, setTemperature] = React.useState(temperatureOpt[0].id);
-  const [wind, setWind] = React.useState(windOpt[0].id);
-  const [preciptation, setPreciptation] = React.useState(preciptationOpt[0].id);
+  React.useEffect(() => {
+    setWeatherOptions({
+      ...weatherOptions,
+      temperature_unit: temperature,
+      wind_speed_unit: wind,
+      precipitation_unit: preciptation,
+    });
+  }, [temperature, wind, preciptation]);
 
   return (
     <header>
@@ -48,9 +91,9 @@ const Header = () => {
           className={styles.unitsButton}
           onClick={() => setDropdown(!dropdown)}
         >
-          <SettingsSVG/>
+          <SettingsSVG />
           <p>Units</p>
-          <DownArrowSVG/>
+          <DownArrowSVG />
         </button>
         <div
           className={`${styles.unitsMenu} ${dropdown ? styles.active : ""}`}
@@ -64,26 +107,29 @@ const Header = () => {
           >
             Switch to {mode == "imperial" ? "metric" : "imperial"}
           </button>
-          <RadioGroup
-            state={temperature}
-            setState={setTemperature}
-            name="temperature"
-            options={temperatureOpt}
-            title="Temperature"
+
+          <UnitsGroup
+            state={tempOpt.state}
+            setState={tempOpt.setState}
+            name={tempOpt.name}
+            options={tempOpt.options}
+            title={tempOpt.title}
           />
-          <RadioGroup
-            state={wind}
-            setState={setWind}
-            name="wind"
-            options={windOpt}
-            title="Wind Speed"
+
+          <UnitsGroup
+            state={windOpt.state}
+            setState={windOpt.setState}
+            name={windOpt.name}
+            options={windOpt.options}
+            title={windOpt.title}
           />
-          <RadioGroup
-            state={preciptation}
-            setState={setPreciptation}
-            name="preciptation"
-            options={preciptationOpt}
-            title="Preciptation"
+
+          <UnitsGroup
+            state={preciptOpt.state}
+            setState={preciptOpt.setState}
+            name={preciptOpt.name}
+            options={preciptOpt.options}
+            title={preciptOpt.title}
           />
         </div>
       </div>

@@ -32,19 +32,19 @@ export const useWeather = () => {
 };
 
 export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
-  const defaultOptions: WeatherOptions = {
+
+
+  const [weatherOptions, setWeatherOptions] =
+    React.useState<WeatherOptions>({
     latitude: "-4.585808883688986", // TODO: pegar do user
     longitude: "-42.85883983395454",
     wind_speed_unit: "kmh",
     temperature_unit: "celsius",
     precipitation_unit: "mm",
     forecast_days: 7,
-  };
+  });
 
-  const [weatherOptions, setWeatherOptions] =
-    React.useState<WeatherOptions>(defaultOptions);
-
-  let url: string;
+  let url: string = '';
 
   if (weatherOptions) {
     const params = new URLSearchParams(
@@ -54,18 +54,12 @@ export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
       ]),
     );
     url = `${API_URL}&${params}`;
-  } else {
-    const params = new URLSearchParams(
-      Object.entries(defaultOptions).map(([key, value]) => [
-        key,
-        String(value),
-      ]),
-    );
-    url = `${API_URL}&${params}`;
-  }
+  } 
+  if (!url) return;
 
   const { data, loading, error } = useFetch<WeatherResponse>(url);
-  console.log(data)
+  console.log('weatherOptions: ', weatherOptions);
+  console.log('data: ', data);
   return (
     <WeatherContext.Provider
       value={{ data, loading, error, weatherOptions, setWeatherOptions }}
