@@ -15,10 +15,10 @@ const UnitsGroup = <T extends string>(props: UnitInput<T>) => {
       <p className={styles.title}>
         {props.title}
       </p>
-      <div key={props.id}>
+      <div>
         {props.options.map((opt) => {
           return (
-            <label className={styles.radioLabel} htmlFor={opt.id}>
+            <label key={opt.id} className={styles.radioLabel} htmlFor={opt.id}>
               <p>{opt.title}</p>
               <input
                 type="radio"
