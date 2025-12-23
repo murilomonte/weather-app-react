@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Seach.module.css";
 import { useWeather } from "../Context/WeatherContext";
-import useGeocode from "../Hooks/useGeocode";
+import useGeocode, { type CityInfo } from "../Hooks/useGeocode";
 
 const Search = () => {
   const [search, setSearch] = React.useState("");
@@ -15,16 +15,19 @@ const Search = () => {
 
   function handleSearch() {
     geocode.request(search);
-    const cities = geocode.data;
-    console.log(cities);
   }
 
-  function setWeather({ lat, lon }: { lat: string; lon: string }) {
-    console.log({lat, lon})
+  function setWeather(city: CityInfo) {
+
+  const parts = city.fullName.split(",").map(p => p.trim());
+  const fullName = `${parts[0]}, ${parts.at(-1)}`;
+
     weather.setWeatherOptions({
       ...weather.weatherOptions,
-      latitude: lat,
-      longitude: lon,
+      name: city.name,
+      full_name: fullName,
+      latitude: city.lat,
+      longitude: city.lon,
     });
     geocode.setData(null);
   }
@@ -50,7 +53,7 @@ const Search = () => {
                   <button
                     key={city.lat}
                     title={city.fullName}
-                    onClick={() => setWeather({ lat: city.lat, lon: city.lon })}
+                    onClick={() => setWeather(city)}
                   >
                     {city.name}
                   </button>

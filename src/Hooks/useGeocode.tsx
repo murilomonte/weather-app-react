@@ -8,7 +8,7 @@ type CityReponse = {
   display_name: string;
 };
 
-type CityInfo = {
+export type CityInfo = {
   lat: string;
   lon: string;
   name: string;
