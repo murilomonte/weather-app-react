@@ -32,41 +32,42 @@ const Search = () => {
   return (
     <div className={styles.searchContainer}>
       <h1 className={styles.title}>How's the sky looking today?</h1>
-      <div className={styles.searchFieldWrapper}>
-        <label htmlFor="search" className={styles.searchFieldLabel}>
-          <input
-            className={styles.searchField}
-            type="text"
-            name="search"
-            placeholder="Search for a place"
-            onChange={handleInput}
-          />
-        </label>
-
-        {geocode.data ? (
-          <div className={styles.searchResult}>
-            {geocode.data.map((city) => {
-              return (
-                <button
-                  key={city.lat}
-                  title={city.fullName}
-                  onClick={() => setWeather({ lat: city.lat, lon: city.lon })}
-                >
-                  {city.name}
-                </button>
-              );
-            })}
-          </div>
-        ) : null}
-        {geocode.loading ? (
-          <div className={styles.searchResultLoading}>
-            <p>Searching in progress...</p>
-          </div>
-        ) : null}
+      <div className={styles.searchArea}>
+        <div className={styles.searchFieldWrapper}>
+          <label htmlFor="search" className={styles.searchFieldLabel}>
+            <input
+              className={styles.searchField}
+              type="text"
+              name="search"
+              placeholder="Search for a place"
+              onChange={handleInput}
+            />
+          </label>
+          {geocode.data ? (
+            <div className={styles.searchResult}>
+              {geocode.data.map((city) => {
+                return (
+                  <button
+                    key={city.lat}
+                    title={city.fullName}
+                    onClick={() => setWeather({ lat: city.lat, lon: city.lon })}
+                  >
+                    {city.name}
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
+          {geocode.loading ? (
+            <div className={styles.searchResultLoading}>
+              <p>Searching in progress...</p>
+            </div>
+          ) : null}
+        </div>
+        <button className={styles.searchButton} onClick={handleSearch}>
+          Search
+        </button>
       </div>
-      <button className={styles.searchButton} onClick={handleSearch}>
-        Search
-      </button>
     </div>
   );
 };
