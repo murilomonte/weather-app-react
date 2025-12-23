@@ -1,0 +1,6 @@
+.weather {
+  display: grid;
+  grid-template-columns: 7fr 4fr;
+  gap: 30px;
+}
+

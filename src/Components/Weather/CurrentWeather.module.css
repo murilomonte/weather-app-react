@@ -1,0 +1,81 @@
+.currentWeather {
+  display: grid;
+  grid-row: 2fr 1fr;
+  gap: 30px;
+}
+
+.currentTemperature {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-image: url("../../assets/images/bg-today-large.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  width: 800px;
+  height: 286px;
+  padding: 20px;
+}
+
+.currentTemperatureLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  width: 800px;
+  height: 286px;
+  padding: 20px;
+  background-color: var(--neutral-800);
+}
+
+.cityName {
+  font-weight: 800;
+  font-size: 2rem;
+}
+
+.date {
+  color: var(--neutral-200);
+}
+
+.temperature {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.temperature > p {
+  font-size: 5rem;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.currentConditions {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.currentConditions > * {
+  flex: 1
+}
+
+.currentConditions > div {
+  background-color: var(--neutral-800);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 25px;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-600);
+}
+
+.condition > p:first-child {
+  font-weight: 800;
+}
+
+.condition > p:last-child {
+  font-weight: 300;
+  font-size: 1.69rem;
+}
