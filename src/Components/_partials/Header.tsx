@@ -20,9 +20,15 @@ type WindUnits = "kmh" | "mph";
 type PreciptUnits = "mm" | "inch";
 
 const Header = () => {
+  // TODO: refazer alumas partes
+
+
   const [temperature, setTemperature] = React.useState<TempUnits>("celsius");
   const [wind, setWind] = React.useState<WindUnits>("mph");
   const [preciptation, setPreciptation] = React.useState<PreciptUnits>("mm");
+
+  const [dropdown, setDropdown] = React.useState(false);
+  const [mode, setMode] = React.useState<Units>("metric");
 
   const tempOpt: UnitOptions<TempUnits> = {
     state: temperature,
@@ -56,9 +62,6 @@ const Header = () => {
       { id: "inch", title: "Inches (in)" },
     ],
   };
-
-  const [dropdown, setDropdown] = React.useState(false);
-  const [mode, setMode] = React.useState<Units>("imperial");
 
   const { data, weatherOptions, setWeatherOptions } = useWeather();
 
