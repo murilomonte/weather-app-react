@@ -1,12 +1,12 @@
 import React from "react";
 import useFetch from "../Hooks/useFetch";
-import type { WeatherResponse } from "./WeatherInterfaces";
+import type { WeatherData, WeatherResponse } from "./WeatherInterfaces";
 
 const API_URL =
-  "https://api.open-meteo.com/v1/forecast?daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&timezone=auto";
+  "https://api.open-meteo.com/v1/forecast?daily=temperature_2m_max,weather_code,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&timezone=auto";
 
 type IWeatherContext = {
-  data: WeatherResponse | null;
+  data: WeatherData | null;
   loading: boolean;
   error: string | null;
   weatherOptions: WeatherOptions;
@@ -14,8 +14,11 @@ type IWeatherContext = {
 };
 
 type WeatherOptions = {
-  latitude: string;
-  longitude: string;
+  name: string | null;
+  full_name: string | null;
+
+  latitude: string | null;
+  longitude: string | null;
   wind_speed_unit: "mph" | "kmh";
   temperature_unit: "fahrenheit" | "celsius";
   precipitation_unit: "inch" | "mm";
@@ -32,37 +35,76 @@ export const useWeather = () => {
 };
 
 export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
+  const [weatherOptions, setWeatherOptions] = React.useState<WeatherOptions>({
+    name: null,
+    full_name: null,
+    latitude: null,
+    longitude: null,
 
-
-  const [weatherOptions, setWeatherOptions] =
-    React.useState<WeatherOptions>({
-    latitude: "-4.585808883688986", // TODO: pegar do user
-    longitude: "-42.85883983395454",
     wind_speed_unit: "kmh",
     temperature_unit: "celsius",
     precipitation_unit: "mm",
     forecast_days: 7,
   });
 
-  let url: string = '';
+  let data: WeatherData | null = null;
+  let loading: boolean = false;
+  let error: string | null = null;
 
-  if (weatherOptions) {
-    const params = new URLSearchParams(
-      Object.entries(weatherOptions).map(([key, value]) => [
-        key,
-        String(value),
-      ]),
-    );
-    url = `${API_URL}&${params}`;
-  } 
-  if (!url) return;
+  const ignore = ["name", "full_name"];
 
-  const { data, loading, error } = useFetch<WeatherResponse>(url);
-  console.log('weatherOptions: ', weatherOptions);
-  console.log('data: ', data);
+  const hasRequiredOptions =
+    weatherOptions.latitude !== null &&
+    weatherOptions.longitude !== null &&
+    weatherOptions.name !== null &&
+    weatherOptions.full_name !== null;
+
+  const params = hasRequiredOptions
+    ? new URLSearchParams(
+        Object.entries(weatherOptions)
+          .filter(([key]) => !ignore.includes(key))
+          .map(([key, value]) => [key, String(value)]),
+      ).toString()
+    : null;
+  const url = params ? `${API_URL}&${params}` : null;
+  console.log('url', url)
+
+  const response = useFetch<WeatherResponse>(url);
+
+  if (
+    response.data &&
+    weatherOptions.name !== null &&
+    weatherOptions.full_name !== null
+  ) {
+    const date = new Date(response.data.current.time);
+
+    const formatted = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }).format(date);
+
+    data = {
+      name: weatherOptions.name,
+      full_name: weatherOptions.full_name,
+      ...response.data,
+    };
+    data.current.time = formatted;
+  }
+
+  loading = response.loading;
+  error = response.error;
+
   return (
     <WeatherContext.Provider
-      value={{ data, loading, error, weatherOptions, setWeatherOptions }}
+      value={{
+        data,
+        loading,
+        error,
+        weatherOptions,
+        setWeatherOptions,
+      }}
     >
       {children}
     </WeatherContext.Provider>

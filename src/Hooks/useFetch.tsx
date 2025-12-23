@@ -7,7 +7,7 @@ interface FetchState<T> {
 }
 
 const useFetch = <T,>(
-  url: RequestInfo | URL,
+  url: RequestInfo | URL | null,
   options?: RequestInit,
 ): FetchState<T> => {
   const [data, setData] = React.useState<T | null>(null);
@@ -17,15 +17,17 @@ const useFetch = <T,>(
   const abortControllerRef = React.useRef<AbortController | null>(null);
   const optionsRef = React.useRef(options);
   optionsRef.current = options;
-  
+
   React.useEffect(() => {
     const abortController = new AbortController();
     abortControllerRef.current = abortController;
 
     async function request() {
-      setLoading(true);
       setError(null);
       setData(null);
+      if (!url) return;
+
+      setLoading(true);
 
       let response: Response | null;
       let json: T | null;
