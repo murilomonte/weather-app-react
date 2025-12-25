@@ -1,0 +1,39 @@
+.dailyForecastContainer > h2 {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.dailyForecast, .dailyForecastLoading {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.dailyForecastLoading {
+  height: 137px;
+}
+
+.dayForecast {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  padding: 10px;
+  border-radius: 10px;
+  gap: 10px;
+  background-color: var(--neutral-800);
+  border: 1px solid var(--neutral-600);
+}
+
+.dayMaxMinTemp {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dayMaxMinTemp > p:last-child {
+  color: var(--neutral-200);
+}
+
+
