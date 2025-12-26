@@ -1,3 +1,7 @@
+.dailyForecastContainer {
+  grid-column: 1 / 1 ;
+}
+
 .dailyForecastContainer > h2 {
   font-size: 1rem;
   margin-bottom: 15px;

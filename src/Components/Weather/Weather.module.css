@@ -1,6 +1,9 @@
 .weather {
   display: grid;
   grid-template-columns: 7fr 4fr;
+  grid-template-rows: 7fr 4fr;
   gap: 30px;
+  align-items: stretch;
+  height: 650px;
 }
 
