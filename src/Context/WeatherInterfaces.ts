@@ -18,6 +18,7 @@ export type WeatherResponse = {
   };
   current: {
     time: string;
+    formated_time: string,
     interval: number;
     temperature_2m: number;
     relative_humidity_2m: number;

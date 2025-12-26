@@ -37,7 +37,7 @@ const CurrentWeather = () => {
         <section className={styles.currentTemperature}>
           <div>
             <p className={styles.cityName}>{data.full_name}</p>
-            <p className={styles.date}>{data.current.time}</p>
+            <p className={styles.date}>{data.current.formated_time}</p>
           </div>
           <div className={styles.temperature}>
             <div className={styles.icon}>

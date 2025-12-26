@@ -90,7 +90,7 @@ export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
       full_name: weatherOptions.full_name,
       ...response.data,
     };
-    data.current.time = formatted;
+    data.current.formated_time = formatted;
   }
 
   loading = response.loading;
