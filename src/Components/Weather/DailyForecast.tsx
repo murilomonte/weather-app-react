@@ -2,6 +2,7 @@ import React from "react";
 import { useWeather } from "../../Context/WeatherContext";
 import styles from "./DailyForecast.module.css";
 import { WeatherIcon } from "./WeatherIcon";
+import { extractWeekDay } from "../../utils/strToDate";
 
 type DailyWeather = { time: string; max: string; min: string; code: number };
 
@@ -13,18 +14,13 @@ const DailyForecast = () => {
     if (!data) return;
     const daily = data.daily;
 
-    function strToWeekDay(str: string) {
-      return new Intl.DateTimeFormat("en-US", {
-        weekday: "short",
-      }).format(new Date(str));
-    }
     let dailyList: DailyWeather[] = [];
     daily.time.map((_, i) => {
       const maxTemp = `${Math.round(daily.temperature_2m_max[i])}°`;
       const minTemp = `${Math.round(daily.temperature_2m_min[i])}°`;
 
       dailyList.push({
-        time: strToWeekDay(daily.time[i]),
+        time: extractWeekDay(daily.time[i]),
         max: maxTemp,
         min: minTemp,
         code: daily.weather_code[i],
