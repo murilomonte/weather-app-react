@@ -61,7 +61,7 @@
   border-radius: 10px;
 }
 
-.searchResult > button {
+.searchResult > button, .searchResult > p {
   width: 100%;
   text-align: left;
   cursor: pointer;
