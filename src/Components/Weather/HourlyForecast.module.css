@@ -9,6 +9,20 @@
   border: 1px solid var(--neutral-600);
 }
 
+.hourlyForecastContainer {
+  overflow-y: auto;
+}
+
+.hourlyForecastContainer::-webkit-scrollbar {
+  width: 2px;
+}
+
+.hourlyForecastContainer::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+}
+
+
 @media (max-width: 1200px) {
   .hourlyForecastContainer {
     grid-row: 3;
