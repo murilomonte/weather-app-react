@@ -13,7 +13,6 @@ const Search = () => {
 
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      console.log(event);
       if (
         searchResults.current &&
         !searchResults.current.contains(event.target as Node)

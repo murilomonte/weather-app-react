@@ -67,7 +67,6 @@ export const WeatherProvider = ({ children }: React.PropsWithChildren) => {
       ).toString()
     : null;
   const url = params ? `${API_URL}&${params}` : null;
-  console.log('url', url)
 
   const response = useFetch<WeatherResponse>(url);
 

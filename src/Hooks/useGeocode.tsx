@@ -47,7 +47,6 @@ const useGeocode = () => {
           fullName: item.display_name,
         };
       });
-      console.log(cityInfo);
 
       if (!abortController.signal.aborted) setData(cityInfo);
     } catch (err) {

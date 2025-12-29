@@ -7,7 +7,6 @@ import { useWeather } from "../Context/WeatherContext";
 
 const Home = () => {
   const { error, weatherOptions, setWeatherOptions } = useWeather();
-  console.log("error", error);
 
   function handleTryAgain() {
     setWeatherOptions({
