@@ -16,7 +16,25 @@ const HourlyForecast = () => {
   const { data, loading } = useWeather();
   const [forecast, setForecast] = React.useState<HourlyWeather[]>();
   const [activeForecast, setActiveForecast] = React.useState<string>();
-  const [dropdown, setdropdown] = React.useState(false);
+  const [dropdown, setDropdown] = React.useState(false);
+  const dropdownMenu = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownMenu.current &&
+        !dropdownMenu.current.contains(event.target as Node)
+      ) {
+        setDropdown(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdown]);
 
   React.useEffect(() => {
     if (!data) return;
@@ -40,9 +58,8 @@ const HourlyForecast = () => {
 
   React.useEffect(() => {
     if (dropdown) {
-      
     }
-  }, [dropdown])
+  }, [dropdown]);
 
   function uniqueDays(list: HourlyWeather[]): { day: string }[] {
     return Array.from(new Map(list.map((item) => [item.day, item])).values());
@@ -54,7 +71,9 @@ const HourlyForecast = () => {
         <div className={styles.forecastHeader}>
           <h2>Hourly forecast</h2>
           <div className={styles.forecastDropdownWrapper}>
-            <button>-  <DownArrowSVG /></button>
+            <button>
+              - <DownArrowSVG />
+            </button>
           </div>
         </div>
         <div className={styles.hourlyForecast}>
@@ -72,8 +91,8 @@ const HourlyForecast = () => {
       <section className={styles.hourlyForecastContainer}>
         <div className={styles.forecastHeader}>
           <h2>Hourly forecast</h2>
-          <div className={styles.forecastDropdownWrapper}>
-            <button onClick={() => setdropdown((prev) => !prev)}>
+          <div ref={dropdownMenu} className={styles.forecastDropdownWrapper}>
+            <button onClick={() => setDropdown((prev) => !prev)}>
               {activeForecast}
               <DownArrowSVG />
             </button>
@@ -85,7 +104,7 @@ const HourlyForecast = () => {
                   <button
                     onClick={() => {
                       setActiveForecast(item.day);
-                      setdropdown(false);
+                      setDropdown(false);
                     }}
                     key={item.day}
                   >
