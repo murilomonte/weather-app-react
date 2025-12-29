@@ -6,64 +6,38 @@ import DownArrowSVG from "../../assets/images/icon-dropdown.svg?react";
 import { useWeather } from "../../Context/WeatherContext";
 import UnitsGroup from "./UnitsGroup";
 
-interface UnitOptions<T> {
-  state: T;
-  setState: React.Dispatch<React.SetStateAction<T>>;
-  title: string;
-  name: string;
-  options: { id: T; title: string }[];
-}
-
 type Units = "imperial" | "metric";
 type TempUnits = "celsius" | "fahrenheit";
 type WindUnits = "kmh" | "mph";
 type PreciptUnits = "mm" | "inch";
 
 const Header = () => {
-  // TODO: refazer alumas partes
-
-
   const [temperature, setTemperature] = React.useState<TempUnits>("celsius");
   const [wind, setWind] = React.useState<WindUnits>("mph");
   const [preciptation, setPreciptation] = React.useState<PreciptUnits>("mm");
 
   const [dropdown, setDropdown] = React.useState(false);
   const [mode, setMode] = React.useState<Units>("metric");
+  const dropdownMenu = React.useRef<HTMLDivElement | null>(null);
 
-  const tempOpt: UnitOptions<TempUnits> = {
-    state: temperature,
-    setState: setTemperature,
-    title: "Temperature",
-    name: "temperature",
-    options: [
-      { id: "celsius", title: "Celcius (°C)" },
-      { id: "fahrenheit", title: "Fahrenheit (°F)" },
-    ],
-  };
+  React.useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownMenu.current &&
+        !dropdownMenu.current.contains(event.target as Node)
+      ) {
+        setDropdown(false);
+      }
+    }
 
-  const windOpt: UnitOptions<WindUnits> = {
-    state: wind,
-    setState: setWind,
-    title: "Wind Speed",
-    name: "wind_speed",
-    options: [
-      { id: "kmh", title: "km/h" },
-      { id: "mph", title: "mph" },
-    ],
-  };
+    document.addEventListener("mousedown", handleClickOutside);
 
-  const preciptOpt: UnitOptions<PreciptUnits> = {
-    state: preciptation,
-    setState: setPreciptation,
-    title: "Preciptation",
-    name: "preciptation",
-    options: [
-      { id: "mm", title: "Milimiters (mm)" },
-      { id: "inch", title: "Inches (in)" },
-    ],
-  };
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdown]);
 
-  const { data, weatherOptions, setWeatherOptions } = useWeather();
+  const { weatherOptions, setWeatherOptions } = useWeather();
 
   React.useEffect(() => {
     if (mode == "imperial") {
@@ -89,7 +63,7 @@ const Header = () => {
   return (
     <header>
       <LogoSVG />
-      <div className={styles.wrapper}>
+      <div ref={dropdownMenu} className={styles.wrapper}>
         <button
           className={styles.unitsButton}
           onClick={() => setDropdown(!dropdown)}
@@ -112,27 +86,36 @@ const Header = () => {
           </button>
 
           <UnitsGroup
-            state={tempOpt.state}
-            setState={tempOpt.setState}
-            name={tempOpt.name}
-            options={tempOpt.options}
-            title={tempOpt.title}
+            title={"Temperature"}
+            name={"temperature"}
+            state={temperature}
+            setState={setTemperature}
+            options={[
+              { id: "celsius", title: "Celcius (°C)" },
+              { id: "fahrenheit", title: "Fahrenheit (°F)" },
+            ]}
           />
 
           <UnitsGroup
-            state={windOpt.state}
-            setState={windOpt.setState}
-            name={windOpt.name}
-            options={windOpt.options}
-            title={windOpt.title}
+            title={"Wind Speed"}
+            name={"wind_speed"}
+            state={wind}
+            setState={setWind}
+            options={[
+              { id: "kmh", title: "km/h" },
+              { id: "mph", title: "mph" },
+            ]}
           />
 
           <UnitsGroup
-            state={preciptOpt.state}
-            setState={preciptOpt.setState}
-            name={preciptOpt.name}
-            options={preciptOpt.options}
-            title={preciptOpt.title}
+            title={"Preciptation"}
+            name={"preciptation"}
+            state={preciptation}
+            setState={setPreciptation}
+            options={[
+              { id: "mm", title: "Milimiters (mm)" },
+              { id: "inch", title: "Inches (in)" },
+            ]}
           />
         </div>
       </div>
