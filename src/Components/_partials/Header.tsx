@@ -73,6 +73,7 @@ const Header = () => {
           <DownArrowSVG />
         </button>
         <div
+          inert={!dropdown}
           className={`${styles.unitsMenu} ${dropdown ? styles.active : ""}`}
           id="unitsMenu"
         >

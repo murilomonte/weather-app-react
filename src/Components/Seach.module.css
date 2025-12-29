@@ -1,8 +1,5 @@
 .searchContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .title {
@@ -14,19 +11,20 @@
   text-align: center;
 }
 
-.searchArea {
+.searchForm {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
-.searchFieldWrapper {
-  justify-self: right;
+.searchBarWrapper {
+  flex-basis: 450px;
+  position: relative;
 }
 
-.searchField {
-  width: 500px;
+.searchBar {
+  width: 100%;
   padding: 10px 30px 10px 50px;
   color: var(--neutral-300);
   font-weight: 600;
@@ -34,26 +32,39 @@
   border-radius: 10px;
   border: none;
   background-color: var(--neutral-800);
+}
+
+.searchBarWrapper {
   position: relative;
 }
 
-.searchFieldLabel {
-  position: relative;
-}
-
-.searchFieldLabel::before {
+.searchBarWrapper::before {
   position: absolute;
   z-index: 99;
-  top: 0%;
+  top: 50%;
+  transform: translateY(-45%);
   left: 15px;
-  content: url('../assets/images/icon-search.svg');
+  content: url("../assets/images/icon-search.svg");
 }
 
-.searchResult, .searchResultLoading {
+.searchButton {
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  justify-self: left;
+  border-radius: 10px;
+  font-weight: 500;
+  background-color: var(--blue-500);
+  color: var(--neutral-200);
+  cursor: pointer;
+}
+
+.searchResult,
+.searchResultLoading {
   margin-top: 10px;
   position: absolute;
   background-color: var(--neutral-800);
-  width: 500px;
+  width: 100%;
   padding: 5px;
   color: var(--neutral-300);
   font-weight: 600;
@@ -61,7 +72,8 @@
   border-radius: 10px;
 }
 
-.searchResult > button, .searchResult > p {
+.searchResult > button,
+.searchResult > p {
   width: 100%;
   text-align: left;
   cursor: pointer;
@@ -75,7 +87,7 @@
   border: 1px solid transparent;
 }
 
-.searchResult > button ~  button {
+.searchResult > button ~ button {
   margin-top: 3px;
 }
 
@@ -89,7 +101,7 @@
 }
 
 .searchResultLoading::before {
-  content: url('../assets/images/icon-loading.svg');
+  content: url("../assets/images/icon-loading.svg");
   height: 16px;
   width: 16px;
   top: 50%;
@@ -99,14 +111,14 @@
   position: absolute;
 }
 
-
-.searchButton {
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  justify-self: left;
-  border-radius: 10px;
-  font-weight: 500;
-  background-color: var(--blue-500);
-  color: var(--neutral-200);
+@media (max-width: 620px) {
+  .searchForm {
+    gap: 10px;
+  }
+  .searchBarWrapper {
+    flex-grow: 1;
+  }
+  .searchButton {
+    flex-grow: 1;
+  }
 }

@@ -5,5 +5,20 @@
   gap: 30px;
   align-items: stretch;
   height: 650px;
+  width: 100%;
 }
 
+@media (max-width: 620px) {
+  .weather {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 1200px) {
+  .weather {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: 100%;
+  }
+}

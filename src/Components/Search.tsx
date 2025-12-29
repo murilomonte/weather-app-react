@@ -55,17 +55,16 @@ const Search = () => {
   return (
     <div className={styles.searchContainer}>
       <h1 className={styles.title}>How's the sky looking today?</h1>
-      <form onSubmit={handleSearch} className={styles.searchArea}>
-        <div className={styles.searchFieldWrapper}>
-          <label htmlFor="search" className={styles.searchFieldLabel}>
-            <input
-              className={styles.searchField}
-              type="text"
-              name="search"
-              placeholder="Search for a place"
-              onChange={handleInput}
-            />
-          </label>
+      <form onSubmit={handleSearch} className={styles.searchForm}>
+        <div className={styles.searchBarWrapper}>
+          <input
+            className={styles.searchBar}
+            type="text"
+            name="search"
+            placeholder="Search for a place"
+            onChange={handleInput}
+            aria-label="Search for a place"
+          />
           {geocode.data ? (
             <div ref={searchResults} className={styles.searchResult}>
               {geocode.data.length > 0 ? (

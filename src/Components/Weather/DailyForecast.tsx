@@ -49,7 +49,7 @@ const DailyForecast = () => {
             ? weather.map((day) => {
                 return (
                   <div key={day.time} className={styles.dayForecast}>
-                    <div className={styles.dayWeek}>{day.time}</div>
+                    <div className={styles.dayWeek}>{day.time.slice(0, 3)}</div>
                     <div className={styles.dayIcon}>
                       <WeatherIcon
                         wmoCode={day.code}

@@ -16,6 +16,7 @@
   width: 800px;
   height: 286px;
   padding: 20px;
+  margin: auto;
 }
 
 .currentTemperatureLoading {
@@ -26,6 +27,7 @@
   width: 800px;
   height: 286px;
   padding: 20px;
+  margin: auto;
   background-color: var(--neutral-800);
 }
 
@@ -53,11 +55,12 @@
 .currentConditions {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 30px;
 }
 
 .currentConditions > * {
-  flex: 1
+  flex: 1;
 }
 
 .currentConditions > div {
@@ -71,6 +74,12 @@
   border: 1px solid var(--neutral-600);
 }
 
+.condition {
+  flex-grow: 1;
+  flex-basis: 170px;
+  flex-shrink: 1;
+}
+
 .condition > p:first-child {
   font-weight: 800;
 }
@@ -78,4 +87,30 @@
 .condition > p:last-child {
   font-weight: 300;
   font-size: 1.69rem;
+}
+
+@media (max-width: 840px) {
+  .currentConditions {
+    gap: 15px;
+  }
+
+  .currentTemperatureLoading {
+    width: 343px;
+    margin: auto;
+  }
+
+  .currentTemperature {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    background-image: url("../../assets/images/bg-today-small.svg");
+
+    width: 343px;
+  }
+
+  .currentLocation {
+    text-align: center;
+  }
 }

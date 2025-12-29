@@ -9,6 +9,13 @@
   border: 1px solid var(--neutral-600);
 }
 
+@media (max-width: 1200px) {
+  .hourlyForecastContainer {
+    grid-row: 3;
+    max-height: 600px;
+  }
+}
+
 .forecastHeader {
   padding: 25px 0 10px;
   position: sticky;
@@ -68,7 +75,6 @@
   border-radius: 5px;
   color: var(--neutral-200);
   border: 1px solid transparent;
-
 }
 
 .dropdown > button:hover {
@@ -81,7 +87,8 @@
   pointer-events: initial;
 }
 
-.forecast, .forecastLoading {
+.forecast,
+.forecastLoading {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,7 +99,8 @@
   border-radius: 10px;
 }
 
-.forecast + .forecast, .forecastLoading + .forecastLoading {
+.forecast + .forecast,
+.forecastLoading + .forecastLoading {
   margin-top: 10px;
 }
 

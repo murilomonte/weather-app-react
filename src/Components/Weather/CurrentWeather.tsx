@@ -35,7 +35,7 @@ const CurrentWeather = () => {
     return (
       <div className={styles.currentWeather}>
         <section className={styles.currentTemperature}>
-          <div>
+          <div className={styles.currentLocation}>
             <p className={styles.cityName}>{data.full_name}</p>
             <p className={styles.date}>{data.current.formated_time}</p>
           </div>
@@ -43,13 +43,13 @@ const CurrentWeather = () => {
             <div className={styles.icon}>
               <WeatherIcon
                 wmoCode={data.current.weather_code}
-                width={48}
-                height={48}
+                width={80}
+                height={80}
                 loading="lazy"
               />
             </div>
             <p>
-              {data.current.temperature_2m}
+              {Math.round(data.current.temperature_2m)}
               {data.current_units.temperature_2m}
             </p>
           </div>

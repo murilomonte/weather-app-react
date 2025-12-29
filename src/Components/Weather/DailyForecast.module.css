@@ -9,16 +9,20 @@
 
 .dailyForecast, .dailyForecastLoading {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   gap: 15px;
 }
 
-.dailyForecastLoading {
+.dailyForecastLoading > .dayForecast {
   height: 137px;
 }
 
 .dayForecast {
-  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,4 +44,11 @@
   color: var(--neutral-200);
 }
 
-
+@media (max-width: 840px) { 
+  .dailyForecast, .dailyForecastLoading {
+    justify-content: start;
+  }
+  .dayForecast {
+    flex-grow: 0;
+  }
+}
